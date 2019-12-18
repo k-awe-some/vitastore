@@ -19,7 +19,11 @@ module.exports = app => {
     res.status(200).send(responses);
   });
 
-  app.post("/api/df_event_query", (req, res) => {
-    res.status(200).send({ do: "event query" });
+  app.post("/api/df_event_query", async (req, res) => {
+    const responses = await chatbot.eventQuery(
+      req.body.text,
+      req.body.parameters
+    );
+    res.status(200).send(responses);
   });
 };
