@@ -1,14 +1,22 @@
 const dialogflow = require("dialogflow");
 
 const structjson = require("./structjson.js");
-const CONFIG = require("../config/keys.js");
+const config = require("../config/keys.js");
 
-const sessionClient = new dialogflow.SessionsClient();
+const projectId = config.GOOGLE_PROJECT_ID;
+const dialogflowSessionId = config.DIALOGFLOW_SESSION_ID;
 
-const sessionPath = sessionClient.sessionPath(
-  CONFIG.GOOGLE_PROJECT_ID,
-  CONFIG.DIALOGFLOW_SESSION_ID
-);
+const credentials = {
+  client_email: config.GOOGLE_CLIENT_EMAIL,
+  private_key: config.GOOGLE_PRIVATE_KEY
+};
+
+const sessionClient = new dialogflow.SessionsClient({
+  projectId,
+  credentials
+});
+
+const sessionPath = sessionClient.sessionPath(projectId, dialogflowSessionId);
 
 module.exports = {
   textQuery: async (text, parameters = {}) => {
@@ -18,7 +26,7 @@ module.exports = {
       queryInput: {
         text: {
           text: text,
-          languageCode: CONFIG.DIALOGFLOW_SESSION_LANGUAGE_CODE
+          languageCode: config.DIALOGFLOW_SESSION_LANGUAGE_CODE
         }
       },
       queryParams: {
@@ -53,7 +61,7 @@ module.exports = {
         event: {
           name: event,
           parameters: structjson.jsonToStructProto(parameters),
-          languageCode: CONFIG.DIALOGFLOW_SESSION_LANGUAGE_CODE
+          languageCode: config.DIALOGFLOW_SESSION_LANGUAGE_CODE
         }
       },
       queryParams: {
