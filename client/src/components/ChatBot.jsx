@@ -20,32 +20,32 @@ const ChatBot = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    console.log("I was called");
     df_text_query("hello");
     // df_event_query("Welcome");
   }, []);
 
   const df_text_query = async text => {
     try {
-      let says = {
+      const saysMe = {
         speaks: "me",
         msg: {
-          text: { text }
+          text: {
+            text: text
+          }
         }
       };
 
-      setMessages([...messages, says]);
+      setMessages(messages => [...messages, saysMe]);
 
       const res = await axios.post("/api/df_text_query", { text });
-      console.log("in df_text_query", res);
 
       for (let msg of res.data[0].queryResult.fulfillmentMessages) {
-        says = {
+        const saysBot = {
           speaks: "bot",
           msg: msg
         };
 
-        setMessages([...messages, says]);
+        setMessages(messages => [...messages, saysBot]);
       }
     } catch (err) {
       console.log(err);
@@ -71,7 +71,6 @@ const ChatBot = () => {
   // };
 
   const renderMessages = messages => {
-    console.log(messages);
     return (
       <List>
         {messages.map((msg, i) => (
@@ -83,10 +82,21 @@ const ChatBot = () => {
     );
   };
 
+  const handleInputKeyPress = event => {
+    if (event.keyCode || (event.which === 13 && event.target.value)) {
+      df_text_query(event.target.value);
+      event.target.value = "";
+    }
+  };
+
   return (
     <div className={classes.botContainer}>
       {messages && renderMessages(messages)}
-      <Input placeholder="Type your message here" fullWidth />
+      <Input
+        placeholder="Type your message here"
+        fullWidth
+        onKeyPress={handleInputKeyPress}
+      />
     </div>
   );
 };
