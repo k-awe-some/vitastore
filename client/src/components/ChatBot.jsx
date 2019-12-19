@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { List, ListItem, Input } from "@material-ui/core";
@@ -10,11 +10,16 @@ const useStyles = makeStyles({
     padding: "0 2rem",
     display: "flex",
     flexDirection: "column",
+    justifyContent: "space-between",
     height: "100%"
+  },
+  inputMessage: {
+    marginBottom: "2rem"
   }
 });
 
 const ChatBot = () => {
+  let messagesTail = useRef();
   const classes = useStyles();
 
   const [messages, setMessages] = useState([]);
@@ -47,6 +52,7 @@ const ChatBot = () => {
 
         setMessages(messages => [...messages, saysBot]);
       }
+      messagesTail.current.scrollIntoView();
     } catch (err) {
       console.log(err);
     }
@@ -92,11 +98,14 @@ const ChatBot = () => {
   return (
     <div className={classes.botContainer}>
       {messages && renderMessages(messages)}
-      <Input
-        placeholder="Type your message here"
-        fullWidth
-        onKeyPress={handleInputKeyPress}
-      />
+
+      <div ref={messagesTail} className={classes.inputMessage}>
+        <Input
+          placeholder="Type your message here"
+          fullWidth
+          onKeyPress={handleInputKeyPress}
+        />
+      </div>
     </div>
   );
 };
