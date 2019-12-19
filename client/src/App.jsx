@@ -155,6 +155,7 @@ const App = () => {
               <ChevronRightIcon />
             )}
           </IconButton>
+          <h1>VitaBot</h1>
         </div>
 
         <Divider />
