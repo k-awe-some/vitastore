@@ -21,13 +21,15 @@ import Landing from "./pages/Landing";
 import About from "./pages/About";
 import Shop from "./pages/Shop";
 
-const drawerWidth = "25vw";
+const drawerWidth = 350;
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
   appBar: {
+    padding: "0 2rem",
+    backgroundColor: "#18A3DD",
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -63,7 +65,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(12),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
