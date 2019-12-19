@@ -11,6 +11,12 @@ module.exports = app => {
     });
   });
 
+  app.get("/test", (req, res) => {
+    res.status(200).json({
+      hello: "there"
+    });
+  });
+
   app.post("/api/df_text_query", async (req, res) => {
     const responses = await chatbot.textQuery(
       req.body.text,
