@@ -1,0 +1,6 @@
+[submodule "client"]
+	path = client
+	url = https://git.heroku.com/vitastore.git
+[submodule "server"]
+	path = server
+	url = https://git.heroku.com/vitastore-server.git
