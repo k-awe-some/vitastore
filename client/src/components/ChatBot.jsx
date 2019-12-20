@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { List, ListItem, Input } from "@material-ui/core";
 
@@ -42,7 +43,10 @@ const ChatBot = () => {
 
       setMessages(messages => [...messages, saysMe]);
 
-      const res = await axios.post("/api/df_text_query", { text });
+      const res = await axios.post(
+        "https://vitastore-server.herokuapp.com/api/df_text_query",
+        { text }
+      );
 
       for (let msg of res.data[0].queryResult.fulfillmentMessages) {
         const saysBot = {

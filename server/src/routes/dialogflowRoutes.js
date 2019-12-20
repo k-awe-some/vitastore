@@ -11,18 +11,17 @@ module.exports = app => {
     });
   });
 
-  app.get("/test", (req, res) => {
-    res.status(200).json({
-      hello: "there"
-    });
-  });
-
   app.post("/api/df_text_query", async (req, res) => {
-    const responses = await chatbot.textQuery(
-      req.body.text,
-      req.body.parameters
-    );
-    res.status(200).send(responses);
+    try {
+      console.log("body", req.body);
+      const responses = await chatbot.textQuery(
+        req.body.text,
+        req.body.parameters
+      );
+      res.status(200).send(responses);
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   app.post("/api/df_event_query", async (req, res) => {
